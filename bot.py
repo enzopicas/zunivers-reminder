@@ -96,6 +96,16 @@ async def list(ctx):
 async def check(ctx):
     await SendReminder()
 
+#Send message from bot to a specific channel
+@bot.command(name="send")
+@commands.has_role('admin')
+async def send(ctx, channelID, message, end=None):
+    if end is None:
+        channel = bot.get_channel(int(channelID))
+        await channel.send(str(message))
+    else:
+        await ctx.channel.send("Tu as entré trop d'arguments")
+
 ####################
 # COMMON FUNCTIONS #
 ####################
