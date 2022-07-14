@@ -36,15 +36,14 @@ Vous pouvez également soumettre vos propositions en créant une nouvelle issue.
 ```bash
 git clone https://github.com/enzopicas/zunivers-reminder
 cd zunivers-reminder
-vim config
-mkdir data
-docker-build --tag zu-reminder .
-docker run -v data/:/app/data/ -d zu-reminder
+vim config #See 'config file' part bellow
+mkdir data #DB will be saved here
+docker-compose up -d
 ```
 
 config file :
 ```
-TOKEN=
-REMIND_CHANNEL=
-SUB_UNSUB_CHANNEL=
+TOKEN= #discord bot token
+REMIND_CHANNEL= #channel to send reminder ID
+SUB_UNSUB_CHANNEL= #channel to accept commands ID
 ```
