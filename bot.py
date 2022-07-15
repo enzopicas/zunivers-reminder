@@ -44,7 +44,7 @@ async def sub(ctx, end=None):
 
                 await ctx.message.author.add_roles(sub_role)
                 await ctx.message.author.remove_roles(not_sub_role)
-                await ctx.channel.send(ctx.message.author.mention + " rejoint les élus en s'abonnant aux alertes !")
+                await ctx.channel.send(ctx.message.author.mention + " : Tu rejoins les élus en t'abonnant aux alertes !")
             else:
                 await ctx.channel.send(ctx.message.author.mention + " : Tu es déjà abonné aux alertes.")
         else:
@@ -67,9 +67,9 @@ async def unsub(ctx, end=None):
 
             await ctx.message.author.add_roles(not_sub_role)
             await ctx.message.author.remove_roles(sub_role)
-            await ctx.channel.send(ctx.message.author.mention + " Tu es désabonné, tu ne peux plus compter que sur toi-même...")
+            await ctx.channel.send(ctx.message.author.mention + " : Tu es désabonné, tu ne peux plus compter que sur toi-même...")
         else:
-            await ctx.channel.send(ctx.message.author.mention + " Il faudrait déjà être abonné avant de se désabonner...")
+            await ctx.channel.send(ctx.message.author.mention + " : Il faudrait déjà être abonné avant de se désabonner...")
     else:
         await ctx.channel.send("Tu as entré trop d'arguments")
 
@@ -127,12 +127,12 @@ async def SendReminder():
             else:
                 pass
 
-            if nbRemind == 0:
-                message += "Tout le monde a fait son !journa aujourd'hui."
-            elif nbRemind == 1:
-                message += "Tu n'as pas fait ton !journa... Gros nul !"
-            elif nbRemind > 1:
-                message += "Vous n'avez pas fait votre !journa bande de nazes !"
+        if nbRemind == 0:
+            message += "Tout le monde a fait son !journa aujourd'hui."
+        elif nbRemind == 1:
+            message += "Tu n'as pas fait ton !journa... Gros nul !"
+        elif nbRemind > 1:
+            message += "Vous n'avez pas fait votre !journa bande de nazes !"
 
         await channel.send(str(message))
 
