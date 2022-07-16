@@ -5,3 +5,4 @@ services:
     build: .
     volumes:
       - ~/zunivers-reminder/data:/app/data
+      - /etc/localtime:/etc/localtime:ro

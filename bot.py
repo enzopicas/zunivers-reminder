@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import zu_api
 import sql
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from datetime import datetime
 
 #Load private file including bot token and channels id
 load_dotenv(dotenv_path="config")
@@ -105,6 +106,11 @@ async def send(ctx, channelID, message, end=None):
         await channel.send(str(message))
     else:
         await ctx.channel.send("Tu as entré trop d'arguments")
+
+@bot.command(name="time")
+@commands.has_role('admin')
+async def time(ctx):
+    await ctx.channel.send(str(datetime.now()))
 
 ####################
 # COMMON FUNCTIONS #
