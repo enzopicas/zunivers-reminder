@@ -1,12 +1,9 @@
 # CHANGELOG
 
-## 2022-08-28 - V2
+## 2022-08-27 - V2
 **fonctionnalités**  
 * Ajout des rappels de !as
 * Les rappels sont envoyés en message privés
-
-**projet**
-* Modification de l'arborescence
 
 ## HOTFIX
 * 2022-07-16 : Modification du fuseau horaire dans le Dockerfile
