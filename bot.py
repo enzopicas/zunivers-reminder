@@ -87,15 +87,24 @@ async def list(ctx):
     if list_users != []:
         for user in list_users:
             loot = zu_api.CheckActivity(str(user[1]), str(user[2]))
-            await ctx.channel.send(str(user[1]) + "#" + str(user[2]) + " |--> Loot =  " + str(loot))
+            tower = zu_api.CheckAs(str(user[1]), str(user[2]))
+            await ctx.channel.send(str(user[1]) + "#" + str(user[2]) + " | Loot =  " + str(loot) + " | As =  " + str(tower))
     else:
         await ctx.channel.send("Il n'y a pas d'utilisateurs enregistrés.")
+
+#Test private message
+@bot.command(name="mp")
+@commands.has_role('admin')
+async def mp(ctx):
+    user = await bot.fetch_user(594195299967434773)
+    await user.send('Hello World')
 
 #Manually send a reminder
 @bot.command(name="check")
 @commands.has_role('admin')
 async def check(ctx):
-    await SendReminder()
+    await SendJournaReminder()
+    await SendAsReminder()
 
 #Send message from bot to a specific channel
 @bot.command(name="send")
@@ -116,31 +125,38 @@ async def time(ctx):
 # COMMON FUNCTIONS #
 ####################
 
-#Send the reminder
-async def SendReminder():
+#Send the !journa reminder
+async def SendJournaReminder():
     list_users = sql.GetUsers()
-    nbRemind = 0
-    message = ""
 
-    channel = bot.get_channel(int(os.getenv("REMIND_CHANNEL")))
+    channel = bot.get_channel(int(os.getenv("ADMIN_CHANNEL")))
 
     if list_users != []:
         for user in list_users:
             loot = zu_api.CheckActivity(str(user[1]), str(user[2]))
             if loot == False:
-                message += "<@" + str(user[0]) + ">\n"
-                nbRemind += 1
+                user_mention = await bot.fetch_user(user[0])
+                await user_mention.send("Tu n'a pas fait ton !journa !")
             else:
                 pass
 
-        if nbRemind == 0:
-            message += "Tout le monde a fait son !journa aujourd'hui."
-        elif nbRemind == 1:
-            message += "Tu n'as pas fait ton !journa... Gros nul !"
-        elif nbRemind > 1:
-            message += "Vous n'avez pas fait votre !journa bande de nazes !"
+    else:
+        await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
 
-        await channel.send(str(message))
+#Send the !as reminder
+async def SendAsReminder():
+    list_users = sql.GetUsers()
+
+    channel = bot.get_channel(int(os.getenv("ADMIN_CHANNEL")))
+
+    if list_users != []:
+        for user in list_users:
+            tower = zu_api.CheckAs(str(user[1]), str(user[2]))
+            if tower == False:
+                user_mention = await bot.fetch_user(user[0])
+                await user_mention.send("Tu as 2 !as disponibles !")
+            else:
+                pass
 
     else:
         await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
@@ -150,7 +166,8 @@ async def SendReminder():
 #############
 
 scheduler = AsyncIOScheduler()
-scheduler.add_job(SendReminder, 'cron', hour='20', minute='00')
+scheduler.add_job(SendJournaReminder, 'cron', hour='20', minute='00')
+scheduler.add_job(SendAsReminder, 'cron', hour='12', minute='00')
 scheduler.start()
 
 #############

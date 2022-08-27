@@ -3,7 +3,7 @@
 Ce projet communautaire en lien avec [ZUnivers](https://zunivers.zerator.com/) n'est pas affilié à ZeratoR ou les équipes du ZUnivers.
 
 ## Description
-L'objectif de ce code est de fournir un bot permettant de recevoir une notification discord quotidienne en cas d'oubli d'utilisation  de la commande `!journa`.
+L'objectif de ce code est de fournir un bot permettant de recevoir une notification discord quotidienne en cas d'oubli d'utilisation  de la commande `!journa` ou `!as`.
 
 Vous pouvez directement rejoindre le serveur présenté ci-dessous pour utiliser le bot, ou cloner le repo pour développer le vôtre.
 
@@ -18,7 +18,8 @@ Rejoindre le serveur : [discord.gg/87tCbHAwma](https://discord.gg/87tCbHAwma)
 |`!unsub`|Permet de se désabonner des alertes quotidiennes. Supprime toutes les données personnelles de la base de données.
 
 Les commandes doivent être entrées dans le channel `#sub-unsub`  
-Les alertes sont envoyées tous les jours à **20h00** dans le channel `#daily-reminder` avec une mention pour les utilisateurs concernés, pensez à activer les notifications.
+Les alertes sont envoyées tous les jours à **20h00** pour les `!journa` par message privé. Pensez à activer les notifications de l'application.  
+Vous recevrez une notification quotidienne à **12h00** pour faire vos `!as`.
 
 ## Licence
 Ce projet est fourni sous licence MIT.
@@ -44,6 +45,6 @@ docker-compose up -d
 config file :
 ```
 TOKEN= #discord bot token
-REMIND_CHANNEL= #channel to send reminder ID
+ADMIN_CHANNEL= #channel to send debug messages
 SUB_UNSUB_CHANNEL= #channel to accept commands ID
 ```
