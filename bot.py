@@ -87,7 +87,8 @@ async def list(ctx):
     if list_users != []:
         for user in list_users:
             loot = zu_api.CheckActivity(str(user[1]), str(user[2]))
-            await ctx.channel.send(str(user[1]) + "#" + str(user[2]) + " |--> Loot =  " + str(loot))
+            tower = zu_api.CheckAs(str(user[1]), str(user[2]))
+            await ctx.channel.send(str(user[1]) + "#" + str(user[2]) + " | Loot =  " + str(loot) + " | As =  " + str(tower))
     else:
         await ctx.channel.send("Il n'y a pas d'utilisateurs enregistrés.")
 
@@ -95,7 +96,7 @@ async def list(ctx):
 @bot.command(name="check")
 @commands.has_role('admin')
 async def check(ctx):
-    await SendReminder()
+    await SendJournaReminder()
 
 #Send message from bot to a specific channel
 @bot.command(name="send")
@@ -116,8 +117,8 @@ async def time(ctx):
 # COMMON FUNCTIONS #
 ####################
 
-#Send the reminder
-async def SendReminder():
+#Send the !journa reminder
+async def SendJournaReminder():
     list_users = sql.GetUsers()
     nbRemind = 0
     message = ""
@@ -145,12 +146,42 @@ async def SendReminder():
     else:
         await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
 
+#Send the !as reminder
+async def SendAsReminder():
+    list_users = sql.GetUsers()
+    nbRemind = 0
+    message = ""
+
+    channel = bot.get_channel(int(os.getenv("REMIND_CHANNEL")))
+
+    if list_users != []:
+        for user in list_users:
+            tower = zu_api.CheckAs(str(user[1]), str(user[2]))
+            if tower == False:
+                message += "<@" + str(user[0]) + ">\n"
+                nbRemind += 1
+            else:
+                pass
+
+        if nbRemind == 0:
+            message += "Tout le monde est au max de l'ascension, Bravo !"
+        elif nbRemind == 1:
+            message += "Tu as deux !as disponibles !"
+        elif nbRemind > 1:
+            message += "Vous avez deux !as disponibles !"
+
+        await channel.send(str(message))
+
+    else:
+        await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
+
 #############
 # SCHEDULER #
 #############
 
 scheduler = AsyncIOScheduler()
-scheduler.add_job(SendReminder, 'cron', hour='20', minute='00')
+scheduler.add_job(SendJournaReminder, 'cron', hour='20', minute='00')
+scheduler.add_job(SendAsReminder, 'cron', hour='12', minute='00')
 scheduler.start()
 
 #############

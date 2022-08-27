@@ -19,3 +19,14 @@ def CheckActivity(username, tag):
         return True
     else:
         return False
+
+def CheckAs(username, tag):
+    r = json.loads(requests.get("https://zunivers-api.zerator.com/public/tower/"+str(username)+"%23"+str(tag)).content)
+    towerStats = r['towerStats']
+
+    print(towerStats[0]['towerSeasonIndex'])
+
+    if towerStats[0]['maxFloorIndex'] < 6:
+        return False # New !as available
+    else:
+        return True # Already on top
