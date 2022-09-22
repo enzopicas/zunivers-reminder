@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## HOTFIX
+* 2022-09-22 : Correction des alertes de !as envoyées même en haut de la tour
+
 ## 2022-08-27 - V2
 **fonctionnalités**  
 * Ajout des rappels de !as

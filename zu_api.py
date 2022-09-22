@@ -26,7 +26,7 @@ def CheckAs(username, tag):
 
     print(towerStats[0]['towerSeasonIndex'])
 
-    if towerStats[0]['maxFloorIndex'] < 6:
+    if towerStats[0]['maxFloorIndex'] < 5:
         return False # New !as available
     else:
         return True # Already on top
