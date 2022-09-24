@@ -3,6 +3,8 @@
 ## - V3
 **fonctionnalités**
 * Utilisation des slash commands
+**fix**
+* Correction faute sur le rappel de journa
 
 ## 2022-08-27 - V2
 **fonctionnalités**  

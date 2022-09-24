@@ -146,7 +146,7 @@ async def SendJournaReminder():
             loot = zu_api.CheckActivity(str(user[1]), str(user[2]))
             if loot == False:
                 user_mention = await bot.fetch_user(user[0])
-                await user_mention.send("Tu n'a pas fait ton !journa !")
+                await user_mention.send("Tu n'as pas fait ton !journa !")
             else:
                 pass
 
@@ -164,7 +164,7 @@ async def SendAsReminder():
             tower = zu_api.CheckAs(str(user[1]), str(user[2]))
             if tower == False:
                 user_mention = await bot.fetch_user(user[0])
-                await user_mention.send("Tu as 2 !as disponibles !")
+                await user_mention.send("Tu as 2 nouvelles !as disponibles !")
             else:
                 pass
 
