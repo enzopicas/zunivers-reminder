@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## - V3
+**fonctionnalités**
+* Utilisation des slash commands
+
 ## 2022-08-27 - V2
 **fonctionnalités**  
 * Ajout des rappels de !as
