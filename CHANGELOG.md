@@ -3,6 +3,7 @@
 ## - V3
 **fonctionnalités**
 * Utilisation des slash commands
+* Des stats sur le nombre de journa et as envoyés sont envoyées qutidiennement dans un channel d'admin
 **fix**
 * Correction faute sur le rappel de journa
 

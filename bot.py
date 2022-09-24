@@ -140,6 +140,7 @@ async def SendJournaReminder():
     list_users = sql.GetUsers()
 
     channel = bot.get_channel(int(os.getenv("ADMIN_CHANNEL")))
+    cnt_sent = 0
 
     if list_users != []:
         for user in list_users:
@@ -147,8 +148,11 @@ async def SendJournaReminder():
             if loot == False:
                 user_mention = await bot.fetch_user(user[0])
                 await user_mention.send("Tu n'as pas fait ton !journa !")
+                cnt_sent += 1
             else:
                 pass
+        
+        await channel.send("Rappel de !journa envoyés : " + str(cnt_sent))
 
     else:
         await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
@@ -158,6 +162,7 @@ async def SendAsReminder():
     list_users = sql.GetUsers()
 
     channel = bot.get_channel(int(os.getenv("ADMIN_CHANNEL")))
+    cnt_sent = 0
 
     if list_users != []:
         for user in list_users:
@@ -165,8 +170,11 @@ async def SendAsReminder():
             if tower == False:
                 user_mention = await bot.fetch_user(user[0])
                 await user_mention.send("Tu as 2 nouvelles !as disponibles !")
+                cnt_sent += 1
             else:
                 pass
+
+        await channel.send("Rappel de !as envoyés : " + str(cnt_sent))
 
     else:
         await channel.send("Il n'y a pas d'utilisateurs enregistrés.")
