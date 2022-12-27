@@ -1,7 +1,7 @@
 import os
 from sched import scheduler
 from discord.ext import commands
-from discord import option, permissions
+from discord import option
 from dotenv import load_dotenv
 import zu_api
 import sql
@@ -34,8 +34,6 @@ async def ping(ctx):
     description="S'abonner aux alertes"
 )
 async def sub(ctx):
-    #Command only available in sub-unsub channel
-
     if zu_api.CheckUser(str(ctx.author.name), str(ctx.author.discriminator)): #Check if user is a ZUnivers player
         if sql.AddUser(str(ctx.author.id), str(ctx.author.name), str(ctx.author.discriminator)):
             await ctx.respond(ctx.author.mention + " : Tu rejoins les élus en t'abonnant aux alertes !")
@@ -50,12 +48,24 @@ async def sub(ctx):
     description="Se désabonner des alertes"
 )
 async def unsub(ctx):
-    #Command only available in sub-unsub channel
+    message = "Tu es abonné aux alertes suivantes :\n"
+    user = sql.GetUser(str(ctx.author.id))
 
-    if sql.DelUser(str(ctx.author.id)):
-        await ctx.respond(ctx.author.mention + " : Tu es désabonné, tu ne peux plus compter que sur toi-même...")
-    else:
-        await ctx.respond(ctx.author.mention + " : Il faudrait déjà être abonné avant de se désabonner...")
+    if user[0][3] == True:
+        message += "* !journa\n"
+    if user[0][3] == True:
+        message += "* !as\n"
+    if user[0][3] == True:
+        message += "* Nouveaux évènements\n"
+
+    message += "\nChoisis les alertes que tu ne souhaite plus recevoir :"
+
+    await ctx.respond(message, view=modals.Unsub_Buttons(timeout=60), ephemeral=True)
+
+    #if sql.DelUser(str(ctx.author.id)):
+    #    await ctx.respond(ctx.author.mention + " : Tu es désabonné, tu ne peux plus compter que sur toi-même...")
+    #else:
+    #    await ctx.respond(ctx.author.mention + " : Il faudrait déjà être abonné avant de se désabonner...")
 
 ############################
 # ADMIN COMMANDS FOR DEBUG #

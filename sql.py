@@ -8,7 +8,7 @@ def CreateDB():
         con = sqlite3.connect('data/data.sqlite')
         cur = con.cursor()
         cur.execute('''CREATE TABLE Users
-                    (discord_id text, username text, tag text)''')
+                    (discord_id text, username text, tag text, journa_alert integer, as_alert integer, event_alert integer)''')
         con.commit()
         con.close()
 
@@ -21,8 +21,8 @@ def AddUser(id, username, tag):
     cur.execute('SELECT * FROM Users WHERE discord_id = '+id)
 
     if len(cur.fetchall()) == 0:
-        cur.execute('''INSERT INTO Users (discord_id,username,tag)
-            VALUES (?,?,?)''',(id,username,tag))
+        cur.execute('''INSERT INTO Users (discord_id, username, tag, journa_alert, as_alert, event_alert)
+            VALUES (?,?,?,TRUE,TRUE,TRUE)''',(id,username,tag))
         con.commit()
         status = True
     else:
@@ -58,3 +58,22 @@ def GetUsers():
     list_users = cur.fetchall()
     con.close()
     return list_users
+
+#Return specific user informations
+def GetUser(id):
+    con = sqlite3.connect('data/data.sqlite')
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM Users WHERE discord_id = ?", (id,))
+    user_infos = cur.fetchall()
+    con.close()
+    return user_infos
+
+#Change user values
+def ChangeUsers(user_id, parameter, new_value):
+    con = sqlite3.connect('data/data.sqlite')
+    cur = con.cursor()
+
+    cur.execute('UPDATE Users SET ' + str(parameter) + ' = ' + str(new_value) + ' WHERE discord_id = ' + str(user_id))
+    con.commit()
+    con.close()
