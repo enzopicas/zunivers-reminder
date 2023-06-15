@@ -3,7 +3,10 @@ import json
 
 #Check if user is registred ZUnivers player
 def CheckUser(username, tag):
-    code = requests.get("https://zunivers-api.zerator.com/public/user/" + username + "%23" + tag).status_code
+    if str(tag) != "0":
+        code = requests.get("https://zunivers-api.zerator.com/public/user/" + username + "%23" + tag).status_code
+    else:
+        code = requests.get("https://zunivers-api.zerator.com/public/user/" + username).status_code
 
     if code == 200:
         return True
@@ -12,7 +15,11 @@ def CheckUser(username, tag):
 
 #Check activity of a specific player
 def CheckActivity(username, tag):
-    r = json.loads(requests.get("https://zunivers-api.zerator.com/public/user/"+str(username)+"%23"+str(tag)+"/activity").content)
+    if str(tag) != "0":
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/user/"+str(username)+"%23"+str(tag)+"/activity").content)
+    else:
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/user/"+str(username)+"/activity").content)
+
     loot = r['lootInfos']
 
     if loot[-1]['count'] > 0:
@@ -21,7 +28,11 @@ def CheckActivity(username, tag):
         return False
 
 def CheckAs(username, tag):
-    r = json.loads(requests.get("https://zunivers-api.zerator.com/public/tower/"+str(username)+"%23"+str(tag)).content)
+    if str(tag) != "0":
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/tower/"+str(username)+"%23"+str(tag)).content)
+    else:
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/tower/"+str(username)).content)
+
     towerStats = r['towerStats']
 
     print(towerStats[0]['towerSeasonIndex'])
