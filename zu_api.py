@@ -16,9 +16,9 @@ def CheckUser(username, tag):
 #Check activity of a specific player
 def CheckActivity(username, tag):
     if str(tag) != "0":
-        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/user/"+str(username)+"%23"+str(tag)+"/activity").content)
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/loot/"+str(username)+"%23"+str(tag)+"?year=0").content)
     else:
-        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/user/"+str(username)+"/activity").content)
+        r = json.loads(requests.get("https://zunivers-api.zerator.com/public/loot/"+str(username)+"?year=0").content)
 
     loot = r['lootInfos']
 
